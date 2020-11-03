@@ -30,8 +30,10 @@
   "AddCard.Dialog.Success.CardDeleted": "Card *%s deleted from saved",
   "AddCard.Dialog.Success.CardAdded": "Card added",
   "AddCard.Error.CardAlreadyAttached": "Card already attached",
+  "AddCard.Error.ErrorAttached": "Error attached card",
   "CardList.Title": "Saved cards",
   "CardList.CardFormat": "Card*%s",
+  "CardList.EmptyList": "You have no saved cards",
   "CardList.Delete": "Delete",
   "CardList.DeleteCard": "Delete card",
   "CardList.Dialog.Delete.TitleFormat": "Deleting card *%s",
@@ -42,5 +44,7 @@
   "Nfc.Dialog.Disable.Message": "Turn on NFC to scan a card",
   "Qr.Static.Title": "QR code payment",
   "Common.Message.TryAgain": "Try again",
-  "Common.Cancel": "Cancel"
+  "Common.Cancel": "Cancel",
+  "Notification.Message.Success": "Successful payment",
+  "Notification.Message.Error": "Payment error"
 }

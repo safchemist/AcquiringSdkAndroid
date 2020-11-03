@@ -14,32 +14,21 @@
  *  limitations under the License.
  */
 
-package ru.tinkoff.acquiring.sdk.models.enums
+package ru.tinkoff.acquiring.sample.service
+
+import android.app.Activity
+import android.content.BroadcastReceiver
+import android.content.Context
+import android.content.Intent
+import ru.tinkoff.acquiring.sample.utils.PaymentNotificationManager
 
 /**
- * Статус привязанной карты
- *
  * @author Mariya Chernyadieva
  */
-enum class CardStatus(private val literal: Char) {
-
-    ACTIVE('A'), INACTIVE('I'), DELETED('D');
-
-    override fun toString(): String {
-        return literal.toString()
-    }
-
-    companion object {
-
-        @JvmStatic
-        fun fromChar(literal: Char): CardStatus {
-            when (literal) {
-                'A' -> return ACTIVE
-                'I' -> return INACTIVE
-                'D' -> return DELETED
-            }
-
-            throw IllegalArgumentException("Unknown literal '$literal'. Cannot construct CardStatus")
-        }
+class PriceNotificationReceiver : BroadcastReceiver() {
+    override fun onReceive(context: Context?, intent: Intent) {
+        intent.getStringExtra(PaymentNotificationIntentService.EXTRA_NOTIFICATION_PRICE_OPTION)?.let {
+                    PaymentNotificationManager.triggerNotification(context as Activity, it)
+                }
     }
 }

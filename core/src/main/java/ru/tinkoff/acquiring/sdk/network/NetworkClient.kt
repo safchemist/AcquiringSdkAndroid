@@ -34,10 +34,18 @@ import ru.tinkoff.acquiring.sdk.network.AcquiringApi.TIMEOUT
 import ru.tinkoff.acquiring.sdk.requests.AcquiringRequest
 import ru.tinkoff.acquiring.sdk.requests.FinishAuthorizeRequest
 import ru.tinkoff.acquiring.sdk.responses.AcquiringResponse
-import ru.tinkoff.acquiring.sdk.responses.ErrorResponse
 import ru.tinkoff.acquiring.sdk.responses.GetCardListResponse
-import ru.tinkoff.acquiring.sdk.utils.serialization.*
-import java.io.*
+import ru.tinkoff.acquiring.sdk.utils.serialization.CardStatusSerializer
+import ru.tinkoff.acquiring.sdk.utils.serialization.CardsListDeserializer
+import ru.tinkoff.acquiring.sdk.utils.serialization.PaymentStatusSerializer
+import ru.tinkoff.acquiring.sdk.utils.serialization.SerializableExclusionStrategy
+import ru.tinkoff.acquiring.sdk.utils.serialization.TaxSerializer
+import ru.tinkoff.acquiring.sdk.utils.serialization.TaxationSerializer
+import java.io.Closeable
+import java.io.IOException
+import java.io.InputStreamReader
+import java.io.OutputStream
+import java.io.UnsupportedEncodingException
 import java.lang.reflect.Modifier
 import java.net.HttpURLConnection
 import java.net.HttpURLConnection.HTTP_OK
@@ -115,8 +123,7 @@ internal class NetworkClient {
             }
         } catch (e: JsonParseException) {
             if (!request.isDisposed()) {
-                val errorResponse = gson.fromJson(response, ErrorResponse::class.java)
-                onFailure(AcquiringApiException(errorResponse, "${errorResponse.message ?: ""} ${errorResponse.details ?: ""}"))
+                onFailure(AcquiringApiException("Invalid response. $response", e))
             }
         } finally {
             closeQuietly(responseReader)
@@ -152,7 +159,7 @@ internal class NetworkClient {
     }
 
     private fun <R : AcquiringResponse> checkResult(result: R, onChecked: (isSuccess: Boolean) -> Unit) {
-        if (AcquiringApi.performedErrorCodesList.contains(result.errorCode) && result.isSuccess!!) {
+        if (result.errorCode == AcquiringApi.API_ERROR_CODE_NO_ERROR && result.isSuccess!!) {
             onChecked(true)
         } else {
             onChecked(false)

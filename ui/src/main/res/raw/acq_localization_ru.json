@@ -30,8 +30,10 @@
   "AddCard.Dialog.Success.CardDeleted": "Карта *%s удалена из сохраненных",
   "AddCard.Dialog.Success.CardAdded": "Карта добавлена",
   "AddCard.Error.CardAlreadyAttached": "Карта уже привязана",
+  "AddCard.Error.ErrorAttached": "Ошибка привязки карты",
   "CardList.Title": "Сохраненные карты",
   "CardList.CardFormat": "Карта*%s",
+  "CardList.EmptyList": "Нет сохраненных карт",
   "CardList.Delete": "Удалить",
   "CardList.DeleteCard": "Удалить карту",
   "CardList.Dialog.Delete.TitleFormat": "Удаление карты *%s",
@@ -42,5 +44,7 @@
   "Nfc.Dialog.Disable.Message": "Для сканирования карты необходимо включить NFC",
   "Qr.Static.Title": "Оплата по QR-коду",
   "Common.Message.TryAgain": "Повторить попытку",
-  "Common.Cancel": "Отменить"
+  "Common.Cancel": "Отменить",
+  "Notification.Message.Success": "Платеж выполнен успешно",
+  "Notification.Message.Error": "Ошибка оплаты"
 }

@@ -15,17 +15,16 @@
   ~  limitations under the License.
   -->
 
-<resources>
-    <color name="acq_colorMain">#1C1C1E</color>
-    <color name="acq_colorMainDark">#333333</color>
-    <color name="acq_colorShadow">@android:color/transparent</color>
-    <color name="acq_colorCardBackground">@color/acq_colorMainDark</color>
-    <color name="acq_colorFpsBackground">#FFFFFF</color>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <item>
+        <shape android:shape="rectangle">
 
-    <color name="acq_colorTitle">#F6F7F8</color>
-    <color name="acq_colorText">@color/acq_colorTitle</color>
-    <color name="acq_colorTextInvalid">#CF6679</color>
+            <solid android:color="@color/common_white" />
+            <corners android:radius="@dimen/buttons_border" />
+            <stroke android:color="@color/acq_colorAccent" android:width="1dp" />
+        </shape>
+    </item>
+</selector>
 
-    <color name="acq_colorHint">#727272</color>
-    <color name="acq_colorTextButton">@color/acq_colorMain</color>
-</resources>
+
+

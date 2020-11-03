@@ -20,6 +20,9 @@ import ru.tinkoff.acquiring.sdk.models.Receipt
 import ru.tinkoff.acquiring.sdk.models.Shop
 import ru.tinkoff.acquiring.sdk.network.AcquiringApi.INIT_METHOD
 import ru.tinkoff.acquiring.sdk.responses.InitResponse
+import java.text.SimpleDateFormat
+import java.util.*
+import kotlin.collections.HashMap
 
 /**
  * Инициирует новый платеж
@@ -49,9 +52,12 @@ class InitRequest : AcquiringRequest<InitResponse>(INIT_METHOD) {
     var customerKey: String? = null
 
     /**
-     * Краткое описание
+     * Краткое описание заказа, макс. длина 250 символов
      */
     var description: String? = null
+        set(value) {
+            field = value?.take(250)
+        }
 
     /**
      * Язык платёжной формы.
@@ -102,6 +108,20 @@ class InitRequest : AcquiringRequest<InitResponse>(INIT_METHOD) {
      */
     var receipts: List<Receipt>? = null
 
+    /**
+     * Срок жизни ссылки
+     */
+    var redirectDueDate: Date? = null
+        set(value) {
+            field = value
+            redirectDueDateFormat = dateFormat.format(value).let {
+                StringBuilder(it).insert(it.length - 2, ":").toString()
+            }
+        }
+
+    private var redirectDueDateFormat: String? = null
+    private val dateFormat = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssZ", Locale.getDefault())
+
     override fun asMap(): MutableMap<String, Any> {
         val map = super.asMap()
 
@@ -116,6 +136,7 @@ class InitRequest : AcquiringRequest<InitResponse>(INIT_METHOD) {
         map.putIfNotNull(RECEIPT, receipt)
         map.putIfNotNull(RECEIPTS, receipts)
         map.putIfNotNull(SHOPS, shops)
+        map.putIfNotNull(REDIRECT_DUE_DATE, redirectDueDateFormat)
         map.putDataIfNonNull(data)
 
         return map
